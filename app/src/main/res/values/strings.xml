@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">My_todoapp</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="add_task">add task</string>
+    <string name="taskname">タスク名</string>
+    <string name="task_name">Task name</string>
+    <string name="category">Category</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+</resources>
