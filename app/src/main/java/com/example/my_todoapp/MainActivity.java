@@ -1,6 +1,8 @@
 package com.example.my_todoapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,4 +26,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
     }
 
+    public void register(View view) {
+        Intent intent = new Intent(getApplication(),SettingActivity.class);
+        intent.putExtra("FLG","");
+        startActivity(intent);
+    }
 }
