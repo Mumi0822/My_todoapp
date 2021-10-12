@@ -9,19 +9,19 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // データーベース情報を変数に格納
-    private static final String DATABASE_NAME = "MyPassDB.db";
-    private static final String TABLE_NAME = "myPasstb";
+    private static final String DATABASE_NAME = "MyTaskDB.db";
+    private static final String TABLE_NAME = "mytaskdb";
     private static final String _ID = "_id";
     private static final String COLUMN_NAME_NAME = "name";
-    private static final String COLUMN_NAME_ID = "ID";
-    private static final String COLUMN_NAME_PASS = "pass";
+    private static final String COLUMN_NAME_CATE = "cate";
+    private static final String COLUMN_NAME_LEVEL = "level";
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     _ID + " INTEGER PRIMARY KEY," +
                     COLUMN_NAME_NAME + " TEXT," +
-                    COLUMN_NAME_ID + " TEXT," +
-                    COLUMN_NAME_PASS + " TEXT)";
+                    COLUMN_NAME_CATE + " TEXT," +
+                    COLUMN_NAME_LEVEL + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;

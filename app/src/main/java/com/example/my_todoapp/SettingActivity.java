@@ -2,37 +2,134 @@ package com.example.my_todoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingActivity extends AppCompatActivity {
     //タスク新規及び更新画面の設定
+    private MyOpenHelper helper;
+    String mode = "";
+    String Message1 = "Task was added.";
+    String Message2 = "Please enter taskname.";
+    String Message3 = "Updated";
+    String Message4 = "Error";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
 
+        //
+        helper = new MyOpenHelper(getApplicationContext());
+
         //MainActivityからのモード指定：0文字なら新規タスク
-        Intent intentMain = getIntent();
-        String flag = intentMain.getStringExtra("FLG");
+        Intent intent = getIntent();
+        String MODE = intent.getStringExtra("MODE");
+
         //新規か更新かで内容を変える部品
         TextView label1 = findViewById(R.id.textView);
         View view1 = findViewById(R.id.Layout1);
+        Button button2 = findViewById(R.id.button2);
 
 
-        if(flag.length()!=0 ){
+        if(MODE.length()!=0 ){
         //更新
+            mode = MODE;
+            label1.setText("EDIT TASK");
+            view1.setBackgroundColor(Color.parseColor("#FFC0FFC0"));
         }else{
         //新規
+            mode = "ADD_TASK";
             label1.setText("ADD TASK");
             view1.setBackgroundColor(Color.parseColor("#FFC0FFC0"));
         }
     }
+
+    public void saveData(View view) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        EditText text1 = findViewById(R.id.Taskname);
+        EditText text2 = findViewById(R.id.Taskcate);
+        EditText text3 = findViewById(R.id.Tasklevel);
+        String name = text1.getText().toString();
+        String cate = text2.getText().toString();
+        String level = text3.getText().toString();
+
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("cate", cate);
+        values.put("level", level);
+
+        if(mode=="ADD_TASK"){
+            if(name.length() != 0){
+                //新規登録
+                db.insert("mytaskdb", null, values);
+                //トースト表示
+                newToast(Message1, 0, +400);
+                finish();
+            }else{
+                //トースト表示
+                newToast(Message2, 0, +400);
+            }
+
+            //ボタンが更新の場合
+        }else{
+            if(name.length() != 0){
+                //更新
+                //UPData(kbn);
+                //トースト表示
+                newToast(Message3, 0, +400);
+                finish();
+            }else{
+                //トースト表示
+                newToast(Message4, 0, +400);
+            }
+        }
+    }
+    /*public void readDate(String read){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        EditText text1 = findViewById(R.id.Taskname);
+        EditText text2 = findViewById(R.id.Taskcate);
+        EditText text3 = findViewById(R.id.Tasklevel);
+
+        Cursor cursor = db.query(
+                "mytaskdb",
+                new String[]{"name","cate","level" },
+                "_ID = ?",
+                new String[]{read},
+                null,null,null
+        );
+        cursor.moveToFirst();
+
+        for(int i = 0; i < cursor.getCount(); i++){
+            text1.setText(cursor.getString(0));
+            text2.setText(cursor.getString(1));
+            text3.setText(cursor.getString(2));
+        }
+
+        cursor.close();
+
+    }*/
+    private void newToast(String message, int x, int y){
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        // 位置調整
+        toast.setGravity(Gravity.CENTER, x, y);
+        toast.show();
+    }
+
     //戻るボタンのonclick
     public void onclose(View view) {
         finish();
     }
+
+
 }
