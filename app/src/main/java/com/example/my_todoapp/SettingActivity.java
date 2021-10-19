@@ -46,6 +46,7 @@ public class SettingActivity extends AppCompatActivity {
             mode = MODE;
             label1.setText("EDIT TASK");
             view1.setBackgroundColor(Color.parseColor("#FFC0FFC0"));
+            readData(mode);
         }else{
         //新規
             mode = "ADD_TASK";
@@ -84,7 +85,7 @@ public class SettingActivity extends AppCompatActivity {
         }else{
             if(name.length() != 0){
                 //更新
-                //UPData(kbn);
+                UPData(mode);
                 //トースト表示
                 newToast(Message3, 0, +400);
                 finish();
@@ -94,7 +95,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         }
     }
-    /*public void readDate(String read){
+    public void readData(String read){
         SQLiteDatabase db = helper.getReadableDatabase();
 
         EditText text1 = findViewById(R.id.Taskname);
@@ -118,7 +119,28 @@ public class SettingActivity extends AppCompatActivity {
 
         cursor.close();
 
-    }*/
+    }
+    public void UPData(String read){
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        EditText txt1 = findViewById(R.id.Taskname);
+        EditText txt2 = findViewById(R.id.Taskcate);
+        EditText txt3 = findViewById(R.id.Tasklevel);
+
+        String name = txt1.getText().toString();
+        String cate = txt2.getText().toString();
+        String level = txt3.getText().toString();
+
+        ContentValues upvalues = new ContentValues();
+        upvalues.put("name",name);
+        upvalues.put("cate",cate);
+        upvalues.put("level",level);
+
+
+        db.update("mytaskdb",upvalues,"_id=?",new String[]{read});
+
+
+    }
     private void newToast(String message, int x, int y){
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         // 位置調整

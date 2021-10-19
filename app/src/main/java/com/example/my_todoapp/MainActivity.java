@@ -45,26 +45,25 @@ public class MainActivity extends AppCompatActivity {
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,android.R.layout.simple_list_item_2,c,from,to,0);
         allTaskList.setAdapter(adapter);
-        /*allTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        allTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
 
                 //各要素を取得
                 //_id
                 String s1 = ((TextView)view.findViewById(android.R.id.text1)).getText().toString();
-                //name
-                //String s2 = ((TextView)view.findViewById(android.R.id.text2)).getText().toString();
 
                 //参照・更新へ
                 Intent intent = new Intent(getApplication(),SettingActivity.class);
 
                 //モード指定　_idを渡す
-                intent.putExtra("KBN",s1);
+                intent.putExtra("MODE",s1);
 
                 //行く
                 startActivity(intent);
             }
-        });*/
+        });
     }
     @Override
     protected void onRestart(){
