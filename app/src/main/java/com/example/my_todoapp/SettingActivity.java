@@ -7,11 +7,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ public class SettingActivity extends AppCompatActivity {
     String Message2 = "Please enter taskname.";
     String Message3 = "Updated";
     String Message4 = "Error";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +42,8 @@ public class SettingActivity extends AppCompatActivity {
         //新規か更新かで内容を変える部品
         TextView label1 = findViewById(R.id.textView);
         View view1 = findViewById(R.id.Layout1);
-        Button button2 = findViewById(R.id.button2);
+        ImageButton button= findViewById(R.id.imageButton);
+
 
 
         if(MODE.length()!=0 ){
@@ -47,11 +52,21 @@ public class SettingActivity extends AppCompatActivity {
             label1.setText("EDIT TASK");
             view1.setBackgroundColor(Color.parseColor("#FFC0FFC0"));
             readData(mode);
+            button.setVisibility(View.VISIBLE);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    delData();
+                    finish();
+                }
+            });
+
         }else{
         //新規
             mode = "ADD_TASK";
             label1.setText("ADD TASK");
             view1.setBackgroundColor(Color.parseColor("#FFC0FFC0"));
+            button.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -153,5 +168,9 @@ public class SettingActivity extends AppCompatActivity {
         finish();
     }
 
-
+    //task削除ボタン
+    public void delData() {
+        SQLiteDatabase db = helper.getReadableDatabase();
+        db.delete("mytaskdb","_id=?",new String[]{mode});
+    }
 }
