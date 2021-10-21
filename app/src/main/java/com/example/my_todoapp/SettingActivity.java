@@ -50,7 +50,7 @@ public class SettingActivity extends AppCompatActivity {
         //更新
             mode = MODE;
             label1.setText("EDIT TASK");
-            view1.setBackgroundColor(Color.parseColor("#FFC0FFC0"));
+            view1.setBackgroundColor(Color.parseColor("#FFC0FFFF"));
             readData(mode);
             button.setVisibility(View.VISIBLE);
             button.setOnClickListener(new View.OnClickListener() {
